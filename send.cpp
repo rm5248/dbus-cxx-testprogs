@@ -5,10 +5,18 @@
 
 using namespace std;
 
+char datebuffer[ 128 ];
+
 void mylog( const char* logger_name, const struct SL_LogLocation* location,
       const enum SL_LogLevel level,
       const char* log_string ){
-    std::cerr << logger_name << " - " << log_string << std::endl;
+    time_t now = time( NULL );
+    struct tm* timeinfo;
+ 
+    timeinfo = localtime( &now );
+    strftime( datebuffer, 128, "%H:%M:%S", timeinfo );
+    std::cerr << "[" << datebuffer << "] " 
+        <<  logger_name << " - " << log_string << std::endl;
 }
 
 
