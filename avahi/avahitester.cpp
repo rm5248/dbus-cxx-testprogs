@@ -19,6 +19,10 @@ void AvahiTester::setConnection(std::shared_ptr<DBus::Connection> conn){
     m_conn = conn;
 }
 
+void AvahiTester::stateChanged( int state, std::string error ){
+    qDebug() << "State changed.  State: " << state << " error: " << QString::fromStdString( error );
+}
+
 void AvahiTester::start(){
     m_avahiServer = Avahi::ServerProxy::create( m_conn, "org.freedesktop.Avahi", "/" );
 
@@ -29,6 +33,10 @@ void AvahiTester::start(){
 
     std::shared_ptr<Avahi::EntryGroupProxy> entryProxy =
             Avahi::EntryGroupProxy::create( m_conn, "org.freedesktop.Avahi", newGroup );
+
+    entryProxy->getorg_freedesktop_Avahi_EntryGroupInterface()
+            ->signal_StateChanged()
+            ->connect( sigc::mem_fun( *this, &AvahiTester::stateChanged ) );
 
     std::vector<std::vector<uint8_t>> txtData;
     txtData.push_back( stringToVector( "robert=hi" ) );

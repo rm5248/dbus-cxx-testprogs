@@ -21,6 +21,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void start();
+    void stateChanged( int state, std::string error );
 
 private:
     std::shared_ptr<DBus::Connection> m_conn;
