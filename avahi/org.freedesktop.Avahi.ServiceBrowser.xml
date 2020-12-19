@@ -21,7 +21,7 @@
   02111-1307 USA.
 -->
 
-<node cppname="ServieBrowser" gen-namespace="Avahi">
+<node cppname="ServiceBrowser" gen-namespace="Avahi">
 
   <interface name="org.freedesktop.DBus.Introspectable">
     <method name="Introspect">
